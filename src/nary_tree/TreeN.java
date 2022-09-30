@@ -67,37 +67,38 @@ public class TreeN {
         }
     }
 
-//    public void delete(Node r, String data) {
-//        Node p = r;
-//        Node ant = null;
-//        Boolean bandera = false;
-//
-//        while (p != null && bandera == false) {
-//            if (p.getSw() == 0) {
-//                if (p.getData().equals(data)) {
-//                    bandera = true;
-//                }
-//            } else {
-//                ant = p;
-//                p = p.getLink();
-//            }
-//        }
-//
-//        if (bandera = false) {
-//            JOptionPane.showMessageDialog(null, "El dato no está");
-//        } else {
-//            if (p == r) {
-//                r.getLink();
-//
-//            } else {
-//                ant.setLink(p.getLink());
-//            }
-//
-//        }
-//    }
     public void delete(Node r, String data) {
         Node p = r;
         Node ant = p;
+        Boolean bandera = true;
+
+        if (p.getData().equals(data) && p.getLink() != null) {
+            String father = p.getLink().getData();
+            delete(p, father);
+            p.setData(father);
+        }
+
+        if (p.getLink() != null) {
+            p = p.getLink();
+        }
+
+        while (p != null && bandera == true) {
+            if (p.getSw() == 0) {
+                if (p.getData().equals(data)) { //Eliminar si es una hoja
+                    ant.setLink(p.getLink());
+                    bandera = false;
+                }
+            } else {
+                delete(p.getLinkList(), data);
+                if (p.getLinkList().getLink() == null) {
+                    p.setData(p.getLinkList().getData());
+                    p.setSw(0);
+                    p.setLinkList(null);
+                }
+            }
+            ant = p;
+            p = p.getLink();
+        }
     }
 
     public String search(Node r, String data) {
@@ -209,4 +210,94 @@ public class TreeN {
 
     }
 
+    public void showChilds(Node r, String data) {
+
+    }
+
+//    public void showSiblings(Node r, String data){
+//        Node p = r;
+//        Boolean bandera = true;
+//        while (p != null && bandera == true) {
+//            if (p.getSw() == 0) {
+//                if (p.getData().equals(data)) {
+//                    System.out.print("Los hermanos del dato son: ");
+//                    p= p.getLink();
+//                    while(p != null){
+//                        System.out.println(" "+p.getData());                                                                                                                                                            p=p.getLink();                                         
+//                    }
+//                    bandera = false;
+//                }
+//            } else {
+//                showSiblings(p.getLinkList(), data);
+//            }
+//            p = p.getLink();
+//        }
+//        if (bandera == true) {
+//            JOptionPane.showMessageDialog(null, "No se encontró el dato");
+//        }
+//    }
+    
+    public void showSiblings(Node r, String data){
+        String x = getFather(r, data);
+        System.out.println(x);
+    }
+    
+    
+    public String getFather(Node r, String data){
+        String father="";
+        Node p = r;
+        Node ant;
+        Node antFather = p;
+        while (p != null) {            
+            if (p.getSw() == 0) {
+                if (p.getData().equals(data)) {
+                     father = ant.getData();                                           
+                }
+            } else{
+                ant = p;
+                getFather(p.getLinkList(), data);
+            }
+            ant = p;
+            p = p.getLink();
+        }
+    return father;    
+    }
+
+    public int showDataLevel(Node r, String data) {
+        Node p = r;
+        int levelcount = 1;
+        Boolean bandera = true;
+        while (p != null && bandera == true) {
+            if (p.getSw() == 0) {
+                if (p.getData().equals(data)) {
+                    System.out.print("El nivel del dato es " + levelcount);
+                    bandera = false;
+                }
+            } else {
+                levelcount++;
+                levelcount = showDataLevel(p.getLinkList(), data);
+            }
+            p = p.getLink();
+        }
+        if (bandera == true) {
+            JOptionPane.showMessageDialog(null, "No se encontró el dato");
+        }
+        return levelcount;
+    }
+
+    public int showHeight(Node r) {
+        Node p = r;
+        int heightcount = 1;
+        while (p != null) {
+            if (p.getSw() == 0) {
+                //no tiene que hacer nada
+            } else {
+                heightcount++;
+                heightcount = showHeight(p.getLinkList());
+            }
+            p = p.getLink();
+        }
+        JOptionPane.showMessageDialog(null, "La altura del arbol es " + heightcount);
+        return heightcount;
+    }
 }

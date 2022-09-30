@@ -26,10 +26,10 @@ public class Nary_Tree {
                 + "9- Show grade\n"
                 + "10- Show childs\n"
                 + "11- Show siblings\n"
-                + "12- Show level\n"
+                + "12- Show node'slevel\n"
                 + "13- Show height\n"
                 + "14- Show parent\n"
-                + "15- Show data's level\n"
+                + "15- Show tree's level\n"
                 + "0- Salir";
         do {
             try {
@@ -93,9 +93,34 @@ public class Nary_Tree {
 
                     case 9:
                         String data2 = JOptionPane.showInputDialog("Write the data");
-                        tree.nodeGrade(p,data2);                        
+                        tree.nodeGrade(p, data2);
                         break;
 
+                    case 10:
+                        String data3 = JOptionPane.showInputDialog("Write the data to see the childs");
+                        tree.showChilds(p, data3);
+                        break;
+
+                    case 11:
+                        String sibling = JOptionPane.showInputDialog("Write the data to see its siblings");
+                        tree.showSiblings(p, sibling);
+                        break;
+
+                    case 12:
+                        String dataLevel = JOptionPane.showInputDialog("Write the data to see its level");
+                        tree.showDataLevel(p, dataLevel);
+                        break;
+                        
+                    case 13:                      
+                        tree.showHeight(p);
+                        break;
+                        
+                    /*+ "10- Show childs\n"
+                + "11- Show siblings\n"
+                + "12- Show data's level\n"
+                + "13- Show height\n"
+                + "14- Show parent\n"
+                + "15- Show tree's level\n"*/
                     case 0:
                         System.exit(0);
                         break;
