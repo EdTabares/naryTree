@@ -78,7 +78,7 @@ public class Nary_Tree {
                         break;
 
                     case 6:
-                        int quantity = tree.counSheet(p);
+                        int quantity = tree.counSheet(p,0);
                         JOptionPane.showMessageDialog(null, "These are " + quantity + " sheets");
                         break;
 
@@ -87,13 +87,14 @@ public class Nary_Tree {
                         break;
 
                     case 8:
-                        int gradeTree = tree.treeGrade(p);
+                        int gradeTree = tree.treeGrade(p,0);
                         JOptionPane.showMessageDialog(null, "The grade tree is: " + gradeTree);
                         break;
 
                     case 9:
                         String data2 = JOptionPane.showInputDialog("Write the data");
-                        tree.nodeGrade(p, data2);
+                        boolean bandera = true;
+                        tree.nodeGrade(p, data2, bandera);
                         break;
 
                     case 10:
@@ -108,19 +109,20 @@ public class Nary_Tree {
 
                     case 12:
                         String dataLevel = JOptionPane.showInputDialog("Write the data to see its level");
-                        tree.showDataLevel(p, dataLevel);
+                        tree.showDataLevel(p, dataLevel,0);
                         break;
                         
                     case 13:                      
-                        tree.showHeight(p);
+                        int contAlt = tree.showHeight(p,0);
+                        JOptionPane.showMessageDialog(null, "La altura del arbol es " + contAlt);
                         break;
                         
-                    /*+ "10- Show childs\n"
-                + "11- Show siblings\n"
-                + "12- Show data's level\n"
-                + "13- Show height\n"
-                + "14- Show parent\n"
-                + "15- Show tree's level\n"*/
+                    case 14:
+                        String dataFather = JOptionPane.showInputDialog("Write the data to see its father");
+                        String father = tree.getFather(p, p,dataFather);
+                        JOptionPane.showMessageDialog(null, "El padre es :"+father);
+                        break;
+                        
                     case 0:
                         System.exit(0);
                         break;

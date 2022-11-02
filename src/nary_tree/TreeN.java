@@ -135,16 +135,15 @@ public class TreeN {
         }
     }
 
-    public int counSheet(Node r) {
+    public int counSheet(Node r, int count) {
         Node p = r;
-        int count = 0;
         while (p != null) {
             if (p.getSw() == 0) {
                 if (p != r) {
                     count++;
                 }
             } else {
-                count = counSheet(p.getLinkList());
+                count = counSheet(p.getLinkList(), count);
             }
             p = p.getLink();
         }
@@ -166,15 +165,16 @@ public class TreeN {
         }
     }
 
-    public int treeGrade(Node r) {
+    public int treeGrade(Node r, int grade) {
         Node p = r;
-        int count = 0, grade = 0;
+        int count = 0;
+        grade++;
 
         while (p != null) {
             if (p.getSw() == 0) {
                 count++;
             } else {
-                grade = treeGrade(p.getLinkList());
+                grade = treeGrade(p.getLinkList(), grade);
             }
             p = p.getLink();
             if (count > grade) {
@@ -184,88 +184,117 @@ public class TreeN {
         return grade;
     }
 
-    public void nodeGrade(Node r, String data) {
+    public void nodeGrade(Node r, String data, boolean bandera) { //9
         Node p = r;
-        Boolean bandera = true;
-        int cont = -1;
+        // Boolean bandera = true;
+        int cont = 0;
 
         while (p != null && bandera == true) {
             if (p.getSw() == 0) {
                 if (p.getData().equals(data)) {
-                    while (p != null) {
-                        cont = cont + 1;
-                        p = p.getLink();
+                    if (r != p) {
+                        JOptionPane.showMessageDialog(null, "El grado del dato es: 0\n");
+                    } else {
+                        r = r.getLink();
+                        while (r != null) {
+                            cont = cont + 1;
+                            r = r.getLink();
+                        }
+                        bandera = false;
+                        JOptionPane.showMessageDialog(null, "El grado del dato es: " + cont + "\n");
                     }
-                    bandera = false;
-                    JOptionPane.showMessageDialog(null, "El grado del dato es: " + cont);
                 }
             } else {
-                nodeGrade(p.getLinkList(), data);
+                nodeGrade(p.getLinkList(), data, bandera);
             }
             p = p.getLink();
         }
-        if (bandera == true) {
-            JOptionPane.showMessageDialog(null, "No se encontró el dato");
-        }
-
     }
 
     public void showChilds(Node r, String data) {
-
-    }
-
-//    public void showSiblings(Node r, String data){
-//        Node p = r;
-//        Boolean bandera = true;
-//        while (p != null && bandera == true) {
-//            if (p.getSw() == 0) {
-//                if (p.getData().equals(data)) {
-//                    System.out.print("Los hermanos del dato son: ");
-//                    p= p.getLink();
-//                    while(p != null){
-//                        System.out.println(" "+p.getData());                                                                                                                                                            p=p.getLink();                                         
-//                    }
-//                    bandera = false;
-//                }
-//            } else {
-//                showSiblings(p.getLinkList(), data);
-//            }
-//            p = p.getLink();
-//        }
-//        if (bandera == true) {
-//            JOptionPane.showMessageDialog(null, "No se encontró el dato");
-//        }
-//    }
-    
-    public void showSiblings(Node r, String data){
-        String x = getFather(r, data);
-        System.out.println(x);
-    }
-    
-    
-    public String getFather(Node r, String data){
-        String father="";
         Node p = r;
-        Node ant;
-        Node antFather = p;
-        while (p != null) {            
+        while (p != null) {
             if (p.getSw() == 0) {
                 if (p.getData().equals(data)) {
-                     father = ant.getData();                                           
+                    System.out.print("Los hijos del dato dado son: \n");
+                    r = r.getLink();
+                    while (r != null) {
+                        System.out.print(" " + r.getData());
+                        r = r.getLink();
+                    }
                 }
-            } else{
-                ant = p;
-                getFather(p.getLinkList(), data);
+            } else {
+                showChilds(p.getLinkList(), data);
+            }
+            p = p.getLink();
+        }
+    }
+
+    public boolean showSiblings(Node r, String data) {
+        boolean flag = false;
+        if (head.getData().equals(data)) {
+            System.out.println("La cabeza no tiene hermanos \n");
+        } else {
+
+            Node p = r;
+            while (p != null) {
+                if (p.getSw() == 0) {
+                    flag = false;
+                    if (p.getData().equals(data) && p != r && flag == false) {
+                        System.out.print("Los hermanos del dato son: \n");
+                        r = r.getLink();
+                        while (r != null) {
+                            if (!r.getData().equals(data)) {
+                                System.out.print(" " + r.getData() + "\n");
+                            }
+                            r = r.getLink();
+                        }                        
+                    } else {                        
+                            flag = true;                                               
+                    }
+                } else {
+                    flag = showSiblings(p.getLinkList(), data);
+                    if (flag == true && p.getLinkList().getData().equals(data)) {
+                        System.out.print("Los hermanos del dato son: \n");
+                        r = r.getLink();
+                        while (r != null) {
+                            if (!r.getData().equals(data)) {
+                                System.out.print(" " + r.getData() + "\n");
+                            }
+                            r = r.getLink();
+                        }
+                    }
+                }
+                p = p.getLink();
+            }
+        }
+        return flag;
+    }
+
+    public String getFather(Node r, Node antFather, String data) {
+        String father = "";
+        Node p = r;
+        Node ant = new Node();
+        //antFather = p;
+        boolean flag = false;
+        while (p != null && flag == false) {
+            if (p.getSw() == 0) {
+                if (p.getData().equals(data)) {
+                    father = antFather.getData();
+                    flag = true;
+                }
+            } else {
+                father = getFather(p.getLinkList(), p, data);
             }
             ant = p;
             p = p.getLink();
         }
-    return father;    
+        return father;
     }
 
-    public int showDataLevel(Node r, String data) {
+    public int showDataLevel(Node r, String data, int levelcount) {
         Node p = r;
-        int levelcount = 1;
+        levelcount++;
         Boolean bandera = true;
         while (p != null && bandera == true) {
             if (p.getSw() == 0) {
@@ -274,30 +303,25 @@ public class TreeN {
                     bandera = false;
                 }
             } else {
-                levelcount++;
-                levelcount = showDataLevel(p.getLinkList(), data);
+                levelcount = showDataLevel(p.getLinkList(), data, levelcount);
+                //levelcount++;
             }
             p = p.getLink();
-        }
-        if (bandera == true) {
-            JOptionPane.showMessageDialog(null, "No se encontró el dato");
         }
         return levelcount;
     }
 
-    public int showHeight(Node r) {
+    public int showHeight(Node r, int heightcount) {
         Node p = r;
-        int heightcount = 1;
+        heightcount++;
         while (p != null) {
             if (p.getSw() == 0) {
                 //no tiene que hacer nada
             } else {
-                heightcount++;
-                heightcount = showHeight(p.getLinkList());
+                heightcount = showHeight(p.getLinkList(), heightcount);
             }
             p = p.getLink();
         }
-        JOptionPane.showMessageDialog(null, "La altura del arbol es " + heightcount);
         return heightcount;
     }
 }
