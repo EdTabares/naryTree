@@ -78,7 +78,7 @@ public class Nary_Tree {
                         break;
 
                     case 6:
-                        int quantity = tree.counSheet(p,0);
+                        int quantity = tree.counSheet(p, 0);
                         JOptionPane.showMessageDialog(null, "These are " + quantity + " sheets");
                         break;
 
@@ -87,7 +87,7 @@ public class Nary_Tree {
                         break;
 
                     case 8:
-                        int gradeTree = tree.treeGrade(p,0);
+                        int gradeTree = tree.treeGrade(p, 0);
                         JOptionPane.showMessageDialog(null, "The grade tree is: " + gradeTree);
                         break;
 
@@ -109,20 +109,24 @@ public class Nary_Tree {
 
                     case 12:
                         String dataLevel = JOptionPane.showInputDialog("Write the data to see its level");
-                        tree.showDataLevel(p, dataLevel,0);
+                        tree.showDataLevel(p, dataLevel, 0);
                         break;
-                        
-                    case 13:                      
-                        int contAlt = tree.showHeight(p,0);
+
+                    case 13:
+                        int contAlt = tree.showHeight(p, 0);
                         JOptionPane.showMessageDialog(null, "La altura del arbol es " + contAlt);
                         break;
-                        
+
                     case 14:
                         String dataFather = JOptionPane.showInputDialog("Write the data to see its father");
-                        String father = tree.getFather(p, p,dataFather);
-                        JOptionPane.showMessageDialog(null, "El padre es :"+father);
+                        if (p.getData().equals(dataFather)) {
+                            JOptionPane.showMessageDialog(null, "El dato no tiene padre");
+                        } else {
+                            String father = tree.getFather(p, p, dataFather);
+                            JOptionPane.showMessageDialog(null, "El padre es :" + father);
+                        }
                         break;
-                        
+
                     case 0:
                         System.exit(0);
                         break;

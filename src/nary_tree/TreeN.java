@@ -248,9 +248,9 @@ public class TreeN {
                                 System.out.print(" " + r.getData() + "\n");
                             }
                             r = r.getLink();
-                        }                        
-                    } else {                        
-                            flag = true;                                               
+                        }
+                    } else {
+                        flag = true;
                     }
                 } else {
                     flag = showSiblings(p.getLinkList(), data);
@@ -274,7 +274,7 @@ public class TreeN {
     public String getFather(Node r, Node antFather, String data) {
         String father = "";
         Node p = r;
-        Node ant = new Node();
+        //Node ant = new Node();
         //antFather = p;
         boolean flag = false;
         while (p != null && flag == false) {
@@ -284,10 +284,15 @@ public class TreeN {
                     flag = true;
                 }
             } else {
-                father = getFather(p.getLinkList(), p, data);
-            }
-            ant = p;
+                
+                father = getFather(p.getLinkList(), antFather, data);
+            }   
+            if (p!=r) {
+                p = p.getLink();
+            } else {
+            antFather = p;
             p = p.getLink();
+            }
         }
         return father;
     }
@@ -298,10 +303,15 @@ public class TreeN {
         Boolean bandera = true;
         while (p != null && bandera == true) {
             if (p.getSw() == 0) {
-                if (p.getData().equals(data)) {
-                    System.out.print("El nivel del dato es " + levelcount);
+                if (p.getData().equals(data) && p == r) {
+                    System.out.print("El nivel del dato es " + levelcount + "\n");
+                    bandera = false;
+                } else if (p.getData().equals(data) && p != r) {
+                    levelcount++;
+                    System.out.print("El nivel del dato es " + levelcount + "\n");
                     bandera = false;
                 }
+
             } else {
                 levelcount = showDataLevel(p.getLinkList(), data, levelcount);
                 //levelcount++;
