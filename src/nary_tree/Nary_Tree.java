@@ -28,8 +28,7 @@ public class Nary_Tree {
                 + "11- Show siblings\n"
                 + "12- Show node'slevel\n"
                 + "13- Show height\n"
-                + "14- Show parent\n"
-                + "15- Show tree's level\n"
+                + "14- Show parent\n"                
                 + "0- Salir";
         do {
             try {
